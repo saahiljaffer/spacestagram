@@ -3,13 +3,14 @@ import Card from "../components/Card";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { ImageDetails } from "../components/Interfaces";
 import Masonry from "react-masonry-css";
+import Cursor from "../components/Cursor";
 
 function ImageList({ data }: { data: ImageDetails[] }) {
   return (
-    <div className="mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+    <div className="bg-gray-800 mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
       <Masonry
         breakpointCols={{ default: 4, 1400: 3, 800: 2, 600: 1 }}
-        className="my-masonry-grid"
+        className="my-masonry-grid bg-gray-800"
         columnClassName="my-masonry-grid_column"
       >
         {data &&
@@ -55,7 +56,8 @@ const Home: NextPage = () => {
 
   if (items) {
     return (
-      <>
+      <div className="bg-gray-800">
+        <Cursor top={0} left={0} />
         <ImageList data={items} />
         <div className="flex justify-center">
           <button
@@ -65,7 +67,7 @@ const Home: NextPage = () => {
             See more images
           </button>
         </div>
-      </>
+      </div>
     );
   } else {
     return <h1>Loading...</h1>;
