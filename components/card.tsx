@@ -60,7 +60,12 @@ export default function Card({ item }: { item: ImageDetails }) {
           {format(date, "EEEE, LLLL do yyyy")}
         </p>
 
-        <p className="text-left mt-1 text-sm text-gray-500 line-clamp-3 group-hover:line-clamp-none">
+        <p
+          className={
+            `text-left mt-1 text-sm text-gray-500 group-hover:line-clamp-none line-clamp-` +
+            (Math.floor(Math.random() * 6) + 1).toString()
+          }
+        >
           {item.data[0].description}
         </p>
       </div>
