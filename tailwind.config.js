@@ -5,7 +5,7 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    lineClamp: ['responsive', 'hover', 'group-hover']
   },
   plugins: [
     require('@tailwindcss/aspect-ratio'),
