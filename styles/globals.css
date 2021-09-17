@@ -27,6 +27,7 @@
   z-index: 999;
 }
 
-* {
+*,
+button {
   cursor: none;
 }
