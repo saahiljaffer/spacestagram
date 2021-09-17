@@ -7,22 +7,24 @@ export default function Card({ item }: { item: ImageDetails }) {
   const [like, setLike] = useState(false);
   const date = new Date(item.data[0].date_created);
   return (
-    <div className="bg-gray-200 mb-8 mx-4">
+    <div className="group bg-gray-200 hover:bg-gray-600 mb-8 mx-4">
       <div className="bg-gray-200 rounded-md w-full">
         <img
           src={item.links[0].href}
           alt={item.data[0].title}
-          className="object-center object-cover w-full"
+          className="object-center object-cover w-full group-hover:opacity-50"
         />
       </div>
       <div className="pb-4 m-4 justify-between">
         <div className="flex justify-between">
-          <h3 className="text-sm text-gray-700">{item.data[0].title}</h3>
+          <h3 className="text-sm text-gray-700 group-hover:text-white">
+            {item.data[0].title}
+          </h3>
           <button
             onClick={() => {
               setLike(!like);
             }}
-            className="flex text-sm font-medium text-gray-900"
+            className="flex text-sm font-medium text-gray-900 group-hover:text-white"
           >
             {like ? (
               <svg
@@ -55,8 +57,10 @@ export default function Card({ item }: { item: ImageDetails }) {
             )}
           </button>
         </div>
-        <p className="mt-1 text-sm text-gray-500">{item.data[0].location}</p>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-gray-500 group-hover:text-white">
+          {item.data[0].location}
+        </p>
+        <p className="mt-1 text-sm text-gray-500 group-hover:text-white">
           {format(date, "EEEE, LLLL do yyyy")}
         </p>
         {/* <button

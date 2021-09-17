@@ -8,7 +8,7 @@ function ImageList({ data }: { data: ImageDetails[] }) {
   return (
     <div className="mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
       <Masonry
-        breakpointCols={3}
+        breakpointCols={{ default: 3, 800: 2, 600: 1 }}
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
