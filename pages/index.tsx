@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
-import Card from "../components/card";
-import { useEffect, useRef, useState } from "react";
+import Card from "../components/Card";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { ImageDetails } from "../components/Interfaces";
 import Masonry from "react-masonry-css";
 
@@ -20,17 +20,53 @@ function ImageList({ data }: { data: ImageDetails[] }) {
 }
 
 const Home: NextPage = () => {
-  const [data, setData] = useState<{ collection: { items: ImageDetails[] } }>();
+  const [items, setItems] = useState<ImageDetails[]>([]);
+
+  const [data, setData] = useState<{
+    collection: { items: ImageDetails[]; links: { href: string }[] };
+  }>();
+  const [page, setPage] = useState(2);
+  // const [fetchUrl, setFetchUrl] = useState(
+
+  // );
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    fetch("https://images-api.nasa.gov/search?year_end=2021&year_start=2021")
+    fetch(
+      "https://images-api.nasa.gov/search?year_end=2021&year_start=2021&page=1"
+    )
       .then((res) => res.json())
-      .then(setData);
+      .then((res) => setItems(res.collection.items));
   }, []);
 
-  if (data) {
-    // return <h1>Loading...</h1>;
-    // return <pre>{JSON.stringify(data.collection.items)}</pre>;
-    return <ImageList data={data.collection.items} />;
+  const fetchData = () => {
+    if (!loading) {
+      setLoading(true);
+      fetch(
+        "https://images-api.nasa.gov/search?year_end=2021&year_start=2021&page=" +
+          page
+      )
+        .then((res) => res.json())
+        .then((res) => setItems((items) => [...items, ...res.collection.items]))
+        .then(() => setPage(page + 1))
+        .then(() => setLoading(false));
+    }
+  };
+
+  if (items) {
+    return (
+      <>
+        <ImageList data={items} />
+        <div className="flex justify-center">
+          <button
+            className="mb-8 font-sans font-medium py-2 px-4 border rounded bg-indigo-600 text-white border-indigo-500 hover:bg-indigo-700"
+            onClick={fetchData}
+          >
+            See more images
+          </button>
+        </div>
+      </>
+    );
   } else {
     return <h1>Loading...</h1>;
   }
