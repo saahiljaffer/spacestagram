@@ -1,20 +1,35 @@
 import type { NextPage } from "next";
 import Card from "../components/Card";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { ImageDetails } from "../components/Interfaces";
 import Masonry from "react-masonry-css";
 import Cursor from "../components/Cursor";
 
-function ImageList({ data }: { data: ImageDetails[] }) {
+function ImageList({
+  data,
+  addLikedImage,
+  removeLikedImage,
+}: {
+  data: ImageDetails[];
+  addLikedImage: (value: string) => void;
+  removeLikedImage: (value: string) => void;
+}) {
   return (
-    <div className="bg-gray-800 mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+    <div className="bg-gray-800 mx-auto py-6 px-4 sm:px-6 lg:px-8">
       <Masonry
-        breakpointCols={{ default: 4, 1400: 3, 800: 2, 600: 1 }}
+        breakpointCols={{ default: 4, 1400: 3, 1000: 2, 700: 1 }}
         className="my-masonry-grid bg-gray-800"
         columnClassName="my-masonry-grid_column"
       >
         {data &&
-          data.map((item) => <Card key={item.data[0].nasa_id} item={item} />)}
+          data.map((item) => (
+            <Card
+              key={item.data[0].nasa_id}
+              item={item}
+              addLikedImage={addLikedImage}
+              removeLikedImage={removeLikedImage}
+            />
+          ))}
       </Masonry>
     </div>
   );
@@ -23,9 +38,22 @@ function ImageList({ data }: { data: ImageDetails[] }) {
 const Home: NextPage = () => {
   const [items, setItems] = useState<ImageDetails[]>([]);
   const [fetchUrl, setFetchUrl] = useState(
-    "https://images-api.nasa.gov/search?year_end=2021&year_start=2021&page=1"
+    "https://images-api.nasa.gov/search?year_end=2021&year_start=2021&page=1&media_type=image"
   );
   const [loading, setLoading] = useState(false);
+  const [liked, setLiked] = useState<string[]>([]);
+
+  useEffect(() => {
+    console.log(liked);
+  }, [liked]);
+
+  function addLikedImage(value: string) {
+    setLiked((liked) => [...liked, value]);
+  }
+
+  function removeLikedImage(value: string) {
+    setLiked((liked) => liked.filter((key) => key != value));
+  }
 
   useEffect(() => {
     fetchData();
@@ -52,7 +80,14 @@ const Home: NextPage = () => {
     return (
       <div className="bg-gray-800">
         <Cursor top={0} left={0} />
-        <ImageList data={items} />
+        <h1 className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-center py-8">
+          Spacestagram
+        </h1>
+        <ImageList
+          data={items}
+          addLikedImage={addLikedImage}
+          removeLikedImage={removeLikedImage}
+        />
         <div className="flex justify-center">
           <button
             className="mb-8 font-sans font-medium py-2 px-4 border rounded bg-indigo-600 text-white border-indigo-500 hover:bg-indigo-700"

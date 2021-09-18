@@ -2,7 +2,15 @@ import { useState } from "react";
 import { ImageDetails } from "./Interfaces";
 import { format } from "date-fns";
 
-export default function Card({ item }: { item: ImageDetails }) {
+export default function Card({
+  item,
+  addLikedImage,
+  removeLikedImage,
+}: {
+  item: ImageDetails;
+  addLikedImage: (value: string) => void;
+  removeLikedImage: (value: string) => void;
+}) {
   const [like, setLike] = useState(false);
   const date = new Date(item.data[0].date_created);
 
@@ -20,6 +28,11 @@ export default function Card({ item }: { item: ImageDetails }) {
           <h3 className="text-sm text-gray-700">{item.data[0].title}</h3>
           <button
             onClick={() => {
+              if (like) {
+                removeLikedImage(item.data[0].nasa_id);
+              } else {
+                addLikedImage(item.data[0].nasa_id);
+              }
               setLike(!like);
             }}
             className="z-20 flex text-sm font-medium text-gray-900"
