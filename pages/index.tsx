@@ -22,34 +22,28 @@ function ImageList({ data }: { data: ImageDetails[] }) {
 
 const Home: NextPage = () => {
   const [items, setItems] = useState<ImageDetails[]>([]);
-
-  const [data, setData] = useState<{
-    collection: { items: ImageDetails[]; links: { href: string }[] };
-  }>();
-  const [page, setPage] = useState(2);
-  // const [fetchUrl, setFetchUrl] = useState(
-
-  // );
+  const [fetchUrl, setFetchUrl] = useState(
+    "https://images-api.nasa.gov/search?year_end=2021&year_start=2021&page=1"
+  );
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch(
-      "https://images-api.nasa.gov/search?year_end=2021&year_start=2021&page=1"
-    )
-      .then((res) => res.json())
-      .then((res) => setItems(res.collection.items));
+    fetchData();
   }, []);
 
   const fetchData = () => {
+    console.log(fetchUrl);
     if (!loading) {
       setLoading(true);
-      fetch(
-        "https://images-api.nasa.gov/search?year_end=2021&year_start=2021&page=" +
-          page
-      )
+      fetch(fetchUrl)
         .then((res) => res.json())
-        .then((res) => setItems((items) => [...items, ...res.collection.items]))
-        .then(() => setPage(page + 1))
+        .then((res) => {
+          console.log(res);
+          setItems((items) => [...items, ...res.collection.items]);
+          setFetchUrl(
+            "https" + res.collection.links.at(-1)["href"].substring(4)
+          );
+        })
         .then(() => setLoading(false));
     }
   };
