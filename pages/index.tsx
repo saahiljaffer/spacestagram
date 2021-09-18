@@ -5,15 +5,7 @@ import { ImageDetails } from "../components/Interfaces";
 import Masonry from "react-masonry-css";
 import Cursor from "../components/Cursor";
 
-function ImageList({
-  data,
-  addLikedImage,
-  removeLikedImage,
-}: {
-  data: ImageDetails[];
-  addLikedImage: (value: string) => void;
-  removeLikedImage: (value: string) => void;
-}) {
+function ImageList({ data }: { data: ImageDetails[] }) {
   return (
     <div className="bg-gray-800 mx-auto py-6 px-4 sm:px-6 lg:px-8">
       <Masonry
@@ -22,14 +14,7 @@ function ImageList({
         columnClassName="my-masonry-grid_column"
       >
         {data &&
-          data.map((item) => (
-            <Card
-              key={item.data[0].nasa_id}
-              item={item}
-              addLikedImage={addLikedImage}
-              removeLikedImage={removeLikedImage}
-            />
-          ))}
+          data.map((item) => <Card key={item.data[0].nasa_id} item={item} />)}
       </Masonry>
     </div>
   );
@@ -41,32 +26,17 @@ const Home: NextPage = () => {
     "https://images-api.nasa.gov/search?year_end=2021&year_start=2021&page=1&media_type=image"
   );
   const [loading, setLoading] = useState(false);
-  const [liked, setLiked] = useState<string[]>([]);
-
-  useEffect(() => {
-    console.log(liked);
-  }, [liked]);
-
-  function addLikedImage(value: string) {
-    setLiked((liked) => [...liked, value]);
-  }
-
-  function removeLikedImage(value: string) {
-    setLiked((liked) => liked.filter((key) => key != value));
-  }
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = () => {
-    console.log(fetchUrl);
     if (!loading) {
       setLoading(true);
       fetch(fetchUrl)
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
           setItems((items) => [...items, ...res.collection.items]);
           setFetchUrl(
             "https" + res.collection.links.at(-1)["href"].substring(4)
@@ -83,11 +53,7 @@ const Home: NextPage = () => {
         <h1 className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-center py-8">
           Spacestagram
         </h1>
-        <ImageList
-          data={items}
-          addLikedImage={addLikedImage}
-          removeLikedImage={removeLikedImage}
-        />
+        <ImageList data={items} />
         <div className="flex justify-center">
           <button
             className="mb-8 font-sans font-medium py-2 px-4 border rounded bg-indigo-600 text-white border-indigo-500 hover:bg-indigo-700"
