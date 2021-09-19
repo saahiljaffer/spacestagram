@@ -31,8 +31,10 @@ const Home: NextPage = () => {
             "https" + res.collection.links.at(-1)["href"].substring(4)
           );
         })
-        .then(() => setLoading(false))
-        .then(() => setInitialLoading(false));
+        .then(() => {
+          setLoading(false);
+          setInitialLoading(false);
+        });
     }
   };
 
@@ -46,7 +48,7 @@ const Home: NextPage = () => {
             content="initial-scale=1.0, width=device-width"
           />
         </Head>
-        {/* <LoadingScreen visible={initialLoading} /> */}
+        <LoadingScreen visible={initialLoading} />
         <NavBar />
         <section className="bg-gray-800">
           <ImageList data={items} />
