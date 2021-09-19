@@ -30,7 +30,10 @@ const Home: NextPage = () => {
           setLoading(false);
           setInitialLoading(false);
           setFetchUrl(
-            "https" + res.collection.links.at(-1)["href"].substring(4)
+            "https" +
+              res.collection.links[res.collection.links.length - 1][
+                "href"
+              ].substring(4)
           );
         });
     }
