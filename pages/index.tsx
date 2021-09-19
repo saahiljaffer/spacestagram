@@ -27,13 +27,11 @@ const Home: NextPage = () => {
         .then((res) => res.json())
         .then((res) => {
           setItems((items) => [...items, ...res.collection.items]);
+          setLoading(false);
+          setInitialLoading(false);
           setFetchUrl(
             "https" + res.collection.links.at(-1)["href"].substring(4)
           );
-        })
-        .then(() => {
-          setLoading(false);
-          setInitialLoading(false);
         });
     }
   };
