@@ -1,12 +1,19 @@
+import { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import Card from "../components/Card";
 import { ImageDetails } from "../components/Interfaces";
 
 export default function ImageList({ data }: { data: ImageDetails[] }) {
-  let audio = new Audio("/effect.mp3");
+  const [audio, setAudio] = useState<HTMLAudioElement>();
+
+  useEffect(() => {
+    setAudio(new Audio("/effect.mp3"));
+  }, []);
 
   const playAudio = () => {
-    audio.play();
+    if (audio) {
+      audio.play();
+    }
   };
 
   return (
