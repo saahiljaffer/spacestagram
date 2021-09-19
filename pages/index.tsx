@@ -17,6 +17,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchData = () => {
@@ -45,7 +46,7 @@ const Home: NextPage = () => {
             content="initial-scale=1.0, width=device-width"
           />
         </Head>
-        <LoadingScreen visible={initialLoading} />
+        {/* <LoadingScreen visible={initialLoading} /> */}
         <NavBar />
         <section className="bg-gray-800">
           <ImageList data={items} />
