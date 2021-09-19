@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ImageDetails } from "./Interfaces";
 import { format } from "date-fns";
+import Image from "next/image";
 
 export default function Card({ item }: { item: ImageDetails }) {
   const [like, setLike] = useState(false);
@@ -9,7 +10,7 @@ export default function Card({ item }: { item: ImageDetails }) {
   return (
     <div className="group bg-gray-200 mb-8 mx-4">
       <div className="bg-gray-200 rounded-md w-full">
-        <img
+        <Image
           src={item.links[0].href}
           alt={item.data[0].title}
           className="object-center object-cover w-full"
