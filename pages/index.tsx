@@ -58,7 +58,7 @@ const Home: NextPage = () => {
       </section>
     );
   } else {
-    return <LoadingScreen visible={true} />;
+    return <></>;
   }
 };
 
