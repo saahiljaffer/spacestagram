@@ -3,7 +3,8 @@ import Card from "../components/Card";
 import { useEffect, useState } from "react";
 import { ImageDetails } from "../components/Interfaces";
 import Masonry from "react-masonry-css";
-import Cursor from "../components/Cursor";
+import Head from "next/head";
+import NavBar from "../components/NavBar";
 
 function ImageList({ data }: { data: ImageDetails[] }) {
   return (
@@ -48,19 +49,45 @@ const Home: NextPage = () => {
 
   if (items) {
     return (
-      <div className="bg-gray-800">
-        <Cursor top={0} left={0} />
-        <h1 className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-center py-8">
-          Spacestagram
-        </h1>
-        <ImageList data={items} />
-        <div className="flex justify-center">
-          <button
-            className="mb-8 font-sans font-medium py-2 px-4 border rounded bg-indigo-600 text-white border-indigo-500 hover:bg-indigo-700"
-            onClick={fetchData}
-          >
-            See more images
-          </button>
+      <div>
+        <Head>
+          <title>spacestagram</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/apple-touch-icon.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/favicon-32x32.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/favicon-16x16.png"
+          />
+          <link rel="manifest" href="/site.webmanifest" />
+        </Head>
+        <NavBar />
+        <div className="bg-gray-800">
+          <ImageList data={items} />
+          {fetchUrl && (
+            <div className="flex justify-center">
+              <button
+                className="mb-8 font-sans font-medium py-2 px-4 border rounded bg-indigo-600 text-white border-indigo-500 hover:bg-indigo-700"
+                onClick={fetchData}
+              >
+                See more images
+              </button>
+            </div>
+          )}
         </div>
       </div>
     );

@@ -12,18 +12,3 @@
 .my-masonry-grid_column {
   background-clip: padding-box;
 }
-
-.cursor {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  transition: all 0.2s ease;
-  transition-property: background, border, transform;
-  transform-origin: 150% 150%;
-  z-index: 50;
-}
-
-*,
-button {
-  cursor: none;
-}
