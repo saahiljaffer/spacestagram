@@ -4,6 +4,8 @@ import { ImageDetails } from "../components/Interfaces";
 import Head from "next/head";
 import NavBar from "../components/NavBar";
 import ImageList from "../components/ImageList";
+import LoadingScreen from "../components/LoadingScreen";
+import FetchButton from "../components/FetchButton";
 
 const Home: NextPage = () => {
   const [items, setItems] = useState<ImageDetails[]>([]);
@@ -35,7 +37,7 @@ const Home: NextPage = () => {
 
   if (items) {
     return (
-      <div>
+      <section>
         <Head>
           <title>spacestagram</title>
           <meta
@@ -43,42 +45,20 @@ const Home: NextPage = () => {
             content="initial-scale=1.0, width=device-width"
           />
         </Head>
+        <LoadingScreen visible={initialLoading} />
         <NavBar />
-        <div
-          className={`h-screen w-screen flex justify-center items-center bg-gray-200 fixed top-0 left-0 z-50 ${
-            initialLoading ? "visible" : "invisible"
-          }`}
-        >
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-        </div>
-        <div className="bg-gray-800">
+        <section className="bg-gray-800">
           <ImageList data={items} />
-          {fetchUrl && (
-            <div className="flex justify-center">
-              {!loading && (
-                <button
-                  className="mb-8 font-sans font-medium py-2 px-4 border rounded bg-indigo-600 text-white border-indigo-500 hover:bg-indigo-700"
-                  onClick={fetchData}
-                >
-                  See more images
-                </button>
-              )}
-              {loading && (
-                <button
-                  className="mb-8 font-sans font-medium py-2 px-4 border rounded bg-indigo-700 text-white border-indigo-500 cursor-not-allowed"
-                  onClick={fetchData}
-                  disabled
-                >
-                  Loading...
-                </button>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
+          <FetchButton
+            fetchData={fetchData}
+            loading={loading}
+            disabled={!fetchUrl}
+          />
+        </section>
+      </section>
     );
   } else {
-    return <h1>Loading...</h1>;
+    return <LoadingScreen visible={true} />;
   }
 };
 

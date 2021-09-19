@@ -17,7 +17,7 @@ export default function ImageList({ data }: { data: ImageDetails[] }) {
   };
 
   return (
-    <div className="bg-gray-800 mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <section className="bg-gray-800 mx-auto py-6 px-4 sm:px-6 lg:px-8">
       <Masonry
         breakpointCols={{ default: 4, 1400: 3, 1000: 2, 700: 1 }}
         className="my-masonry-grid bg-gray-800"
@@ -32,6 +32,6 @@ export default function ImageList({ data }: { data: ImageDetails[] }) {
             />
           ))}
       </Masonry>
-    </div>
+    </section>
   );
 }
