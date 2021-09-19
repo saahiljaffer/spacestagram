@@ -1,25 +1,9 @@
 import type { NextPage } from "next";
-import Card from "../components/Card";
 import { useEffect, useState } from "react";
 import { ImageDetails } from "../components/Interfaces";
-import Masonry from "react-masonry-css";
 import Head from "next/head";
 import NavBar from "../components/NavBar";
-
-function ImageList({ data }: { data: ImageDetails[] }) {
-  return (
-    <div className="bg-gray-800 mx-auto py-6 px-4 sm:px-6 lg:px-8">
-      <Masonry
-        breakpointCols={{ default: 4, 1400: 3, 1000: 2, 700: 1 }}
-        className="my-masonry-grid bg-gray-800"
-        columnClassName="my-masonry-grid_column"
-      >
-        {data &&
-          data.map((item) => <Card key={item.data[0].nasa_id} item={item} />)}
-      </Masonry>
-    </div>
-  );
-}
+import ImageList from "../components/ImageList";
 
 const Home: NextPage = () => {
   const [items, setItems] = useState<ImageDetails[]>([]);

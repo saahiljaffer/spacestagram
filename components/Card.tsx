@@ -3,16 +3,25 @@ import { ImageDetails } from "./Interfaces";
 import { format } from "date-fns";
 import Image from "next/image";
 
-export default function Card({ item }: { item: ImageDetails }) {
+export default function Card({
+  item,
+  playAudio,
+}: {
+  item: ImageDetails;
+  playAudio: () => void;
+}) {
   const [like, setLike] = useState(false);
   const date = new Date(item.data[0].date_created);
 
   return (
     <div className="group bg-gray-200 mb-8 mx-4">
-      <div className="bg-gray-200 rounded-md w-full">
+      <div className="bg-gray-200 rounded-md">
         <Image
           src={item.links[0].href}
           alt={item.data[0].title}
+          width="400"
+          height="400"
+          layout="responsive"
           className="object-center object-cover w-full"
         />
       </div>
@@ -21,6 +30,7 @@ export default function Card({ item }: { item: ImageDetails }) {
           <h3 className="text-sm text-gray-700">{item.data[0].title}</h3>
           <button
             onClick={() => {
+              playAudio();
               setLike(!like);
             }}
             className="z-20 flex text-sm font-medium text-gray-900"
