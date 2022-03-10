@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1d87f26e-c89d-4c2c-b3c1-15d9341bce93/deploy-status)](https://app.netlify.com/sites/gracious-fermat-0e7bfa/deploys)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
